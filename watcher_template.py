@@ -38,7 +38,7 @@ def email_manager(previous_triggers, current_triggers):
     
     body = ""
     for trigger in new_triggers:
-        body += f"{trigger}" # Write down what will be included in the body of email
+        body += f"{trigger}\n" # Write down what will be included in the body of email
     
     send_email(subject + " reached threshold", body)
 
