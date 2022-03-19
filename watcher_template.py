@@ -43,6 +43,18 @@ def email_manager(previous_triggers, current_triggers):
     send_email(subject + " reached threshold", body)
 
 
+def rsi(df, n=14):
+    """ Relative strength index
+    Signals if overbought or oversold, overbought = value > 70, oversold = value < 30"""
+    df = df.copy()
+    df["Change"] = df["Adj Close"] - df["Adj Close"].shift(1)
+    df["Gain"] = np.where(df["Change"] >= 0, df["Change"], 0)
+    df["Loss"] = np.where(df["Change"] < 0, -1 * df["Change"], 0)
+    df["Avg Gain"] = df["Gain"].ewm(alpha=1 / n, min_periods=n).mean()
+    df["Avg Loss"] = df["Loss"].ewm(alpha=1 / n, min_periods=n).mean()
+    df["RS"] = df["Avg Gain"] / df["Avg Loss"]
+    return 100 - (100 / (1 + df["RS"]))
+
 def main(tickers):
     ohlcv_data = {}
     triggers = {}
