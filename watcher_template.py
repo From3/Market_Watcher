@@ -9,11 +9,13 @@ from os import environ
 EMAIL_USER = environ["EMAIL_USER"]
 EMAIL_PASSWORD = environ["EMAIL_PASSWORD"]
 EMAIL_RECEIVER = environ["EMAIL_RECEIVER"]
+
+SMTP_SERVER = "smtp.gmail.com"
 EMAIL_PORT = 587
 
 
 def send_email(subject, body):
-    with smtplib.SMTP("smtp.gmail.com", EMAIL_PORT) as smtp:
+    with smtplib.SMTP(SMTP_SERVER, EMAIL_PORT) as smtp:
         smtp.ehlo()
         smtp.starttls()
         smtp.ehlo()
