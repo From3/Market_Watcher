@@ -55,6 +55,7 @@ def rsi(df, n=14):
     df["RS"] = df["Avg Gain"] / df["Avg Loss"]
     return 100 - (100 / (1 + df["RS"]))
 
+
 def main(tickers):
     ohlcv_data = {}
     triggers = {}
